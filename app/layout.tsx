@@ -1,3 +1,4 @@
+/*arquivo conde coloco as funções*/
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -28,10 +29,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div>
-          <a href="/university">Listar Universidade</a>
-          <a href="/university/new">Cadastrar Universidade</a>
-          <a href="/student">Listar Estudante</a>
-            <a href="/student/new">Cadastrar Estudante</a>
+          <a href="/carros">Listar carro</a>
+          <a href="/carros/new">Cadastrar carro</a>
+         
         </div>
 
         {children}

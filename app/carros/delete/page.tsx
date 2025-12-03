@@ -2,13 +2,13 @@
 
 import { useSearchParams } from "next/navigation"
 
-export default function DeleteUniversity() {
+export default function DeleteCarros() {
 
     const id= useSearchParams().get('id');
 
-    async function deleteUniversity() {
+    async function deleteCarros() {
         console.log("Acessou")
-        await fetch(`https://69165f6da7a34288a27d2bf4.mockapi.io/university/${id}`,
+        await fetch(`https://692f872b778bbf9e006db5b8.mockapi.io/carros/${id}`,
             {
                 method: "DELETE"
             }
@@ -17,7 +17,7 @@ export default function DeleteUniversity() {
     return (
         <div>
             <h1>Confirmar Exclusão?</h1>
-            <button onClick={deleteUniversity}>Confirmr</button>
+            <button onClick={deleteCarros}>Confirmar</button>
         </div>
     )
 }
