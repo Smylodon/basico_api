@@ -1,41 +1,41 @@
-// app/carros/delete/page.tsx
+// app/impress/delete/page.tsx
 "use client"
 
 import { useSearchParams, useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
 
-export default function DeleteCarros() {
+export default function DeleteImpressora() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const id = searchParams.get('id');
     
     const [loading, setLoading] = useState(false);
-    const [carroInfo, setCarroInfo] = useState<any>(null);
+    const [impressoraInfo, setImpressoraInfo] = useState<any>(null);
     const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
     const [message, setMessage] = useState('');
 
-    // Buscar informações do carro para mostrar na confirmação
+    // Buscar informações da impressora para mostrar na confirmação
     useEffect(() => {
         if (id) {
-            fetchCarroInfo();
+            fetchImpressoraInfo();
         }
     }, [id]);
 
-    async function fetchCarroInfo() {
+    async function fetchImpressoraInfo() {
         try {
-            const response = await fetch(`https://692f872b778bbf9e006db5b8.mockapi.io/carros/${id}`);
+            const response = await fetch(`https://69320c7711a8738467d15c0a.mockapi.io/impress/${id}`);
             if (response.ok) {
                 const data = await response.json();
-                setCarroInfo(data);
+                setImpressoraInfo(data);
             }
         } catch (error) {
-            console.error('Erro ao buscar carro:', error);
+            console.error('Erro ao buscar impressora:', error);
         }
     }
 
-    async function deleteCarro() {
+    async function deleteImpressora() {
         if (!id) {
-            setMessage('ID do carro não encontrado');
+            setMessage('ID da impressora não encontrado');
             setStatus('error');
             return;
         }
@@ -44,21 +44,21 @@ export default function DeleteCarros() {
         setMessage('');
 
         try {
-            const response = await fetch(`https://692f872b778bbf9e006db5b8.mockapi.io/carros/${id}`, {
+            const response = await fetch(`https://69320c7711a8738467d15c0a.mockapi.io/impress/${id}`, {
                 method: "DELETE"
             });
 
             if (response.ok) {
                 setStatus('success');
-                setMessage('Carro excluído com sucesso!');
+                setMessage('Impressora excluída com sucesso!');
                 
                 // Redirecionar após 2 segundos
                 setTimeout(() => {
-                    router.push('/carros');
+                    router.push('/impress');
                 }, 2000);
             } else {
                 setStatus('error');
-                setMessage('Erro ao excluir o carro. Tente novamente.');
+                setMessage('Erro ao excluir a impressora. Tente novamente.');
             }
         } catch (error) {
             console.error('Erro:', error);
@@ -70,7 +70,7 @@ export default function DeleteCarros() {
     }
 
     function cancelDelete() {
-        router.push('/carros');
+        router.push('/impress');
     }
 
     return (
@@ -92,18 +92,18 @@ export default function DeleteCarros() {
 
             {/* Card de confirmação */}
             <div className="bg-white rounded-xl border border-amber-100 shadow-sm p-6 mb-6">
-                {carroInfo ? (
+                {impressoraInfo ? (
                     <div className="space-y-4">
                         <div className="flex items-center space-x-4 p-4 bg-amber-50 rounded-lg">
                             <div className="w-12 h-12 bg-rose-900/10 rounded-lg flex items-center justify-center">
                                 <svg className="w-6 h-6 text-rose-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                                 </svg>
                             </div>
                             <div>
-                                <h3 className="font-medium text-amber-800">{carroInfo.marca}</h3>
+                                <h3 className="font-medium text-amber-800">{impressoraInfo.fabricante}</h3>
                                 <p className="text-sm text-amber-600">
-                                    {carroInfo.portas} porta{carroInfo.portas !== '1' ? 's' : ''} • ID: {carroInfo.id}
+                                    {impressoraInfo.qtpag} páginas • ID: {impressoraInfo.id}
                                 </p>
                             </div>
                         </div>
@@ -116,7 +116,7 @@ export default function DeleteCarros() {
                                 <div>
                                     <p className="text-sm text-red-800 font-medium">Atenção!</p>
                                     <p className="text-sm text-red-700 mt-1">
-                                        Você está prestes a excluir permanentemente este veículo do sistema.
+                                        Você está prestes a excluir permanentemente esta impressora do sistema.
                                         Esta ação não pode ser desfeita.
                                     </p>
                                 </div>
@@ -169,7 +169,7 @@ export default function DeleteCarros() {
                         </button>
                         
                         <button
-                            onClick={deleteCarro}
+                            onClick={deleteImpressora}
                             disabled={loading || status === 'success'}
                             className="px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                         >
@@ -197,13 +197,13 @@ export default function DeleteCarros() {
             {/* Informações adicionais */}
             <div className="text-center">
                 <a 
-                    href="/carros"
+                    href="/impress"
                     className="text-sm text-amber-600 hover:text-amber-800 hover:underline inline-flex items-center"
                 >
                     <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
-                    Voltar para a lista de carros
+                    Voltar para a lista de impressoras
                 </a>
             </div>
         </div>

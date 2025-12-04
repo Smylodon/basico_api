@@ -1,62 +1,62 @@
-// app/carros/new/page.tsx
+// app/impress/new/page.tsx
 "use client"
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function NewCarros() {
+export default function NewImpressora() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<{text: string, type: 'success' | 'error'} | null>(null);
     const [formData, setFormData] = useState({
-        marca: '',
-        portas: ''
+        fabricante: '',
+        qtpag: ''
     });
 
-    async function saveCarros(e: React.FormEvent) {
+    async function saveImpressora(e: React.FormEvent) {
         e.preventDefault();
         setLoading(true);
         setMessage(null);
 
         try {
             // Validação simples
-            if (!formData.marca.trim()) {
-                setMessage({text: 'Por favor, informe a marca', type: 'error'});
+            if (!formData.fabricante.trim()) {
+                setMessage({text: 'Por favor, informe o fabricante', type: 'error'});
                 setLoading(false);
                 return;
             }
 
-            if (!formData.portas.trim() || isNaN(Number(formData.portas))) {
-                setMessage({text: 'Por favor, informe um número válido de portas', type: 'error'});
+            if (!formData.qtpag.trim() || isNaN(Number(formData.qtpag))) {
+                setMessage({text: 'Por favor, informe um número válido de páginas', type: 'error'});
                 setLoading(false);
                 return;
             }
 
-            const carro = {
-                marca: formData.marca.trim(),
-                portas: formData.portas.trim()
+            const impressora = {
+                fabricante: formData.fabricante.trim(),
+                qtpag: formData.qtpag.trim()
             }
 
-            const response = await fetch(`https://692f872b778bbf9e006db5b8.mockapi.io/carros`, {
+            const response = await fetch(`https://69320c7711a8738467d15c0a.mockapi.io/impress`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(carro)
+                body: JSON.stringify(impressora)
             });
 
             if (response.ok) {
-                setMessage({text: 'Carro cadastrado com sucesso!', type: 'success'});
+                setMessage({text: 'Impressora cadastrada com sucesso!', type: 'success'});
                 
                 // Limpa o formulário
-                setFormData({ marca: '', portas: '' });
+                setFormData({ fabricante: '', qtpag: '' });
                 
                 // Redireciona após 2 segundos
                 setTimeout(() => {
-                    router.push('/carros');
+                    router.push('/impress');
                 }, 2000);
             } else {
-                setMessage({text: 'Erro ao cadastrar carro', type: 'error'});
+                setMessage({text: 'Erro ao cadastrar impressora', type: 'error'});
             }
         } catch (error) {
             setMessage({text: 'Erro de conexão com o servidor', type: 'error'});
@@ -78,10 +78,10 @@ export default function NewCarros() {
         <div className="max-w-2xl mx-auto">
             <div className="mb-8">
                 <h1 className="text-2xl font-semibold text-rose-900">
-                    Cadastrar Novo Carro
+                    Cadastrar Nova Impressora
                 </h1>
                 <p className="text-amber-700 mt-2">
-                    Preencha os dados do novo veículo
+                    Preencha os dados da nova impressora
                 </p>
             </div>
 
@@ -99,55 +99,54 @@ export default function NewCarros() {
                 </div>
             )}
 
-            <form onSubmit={saveCarros} className="space-y-6">
+            <form onSubmit={saveImpressora} className="space-y-6">
                 <div>
                     <label 
-                        htmlFor="marca" 
+                        htmlFor="fabricante" 
                         className="block text-sm font-medium text-amber-800 mb-2"
                     >
-                        Marca do Carro *
+                        Fabricante *
                     </label>
                     <input 
                         type="text" 
-                        id="marca"
-                        value={formData.marca}
+                        id="fabricante"
+                        value={formData.fabricante}
                         onChange={handleInputChange}
-                        placeholder="Ex: Toyota, Honda, Ford..."
+                        placeholder="Ex: HP, Epson, Canon..."
                         className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-900 focus:border-transparent"
                         required
                     />
                     <p className="text-xs text-amber-600 mt-1">
-                        Informe a marca do veículo
+                        Informe o fabricante da impressora
                     </p>
                 </div>
 
                 <div>
                     <label 
-                        htmlFor="portas" 
+                        htmlFor="qtpag" 
                         className="block text-sm font-medium text-amber-800 mb-2"
                     >
-                        Quantidade de Portas *
+                        Quantidade de Páginas *
                     </label>
                     <input 
                         type="number" 
-                        id="portas"
-                        value={formData.portas}
+                        id="qtpag"
+                        value={formData.qtpag}
                         onChange={handleInputChange}
-                        placeholder="Ex: 2, 4, 5..."
+                        placeholder="Ex: 1000, 5000, 10000..."
                         min="1"
-                        max="6"
                         className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-900 focus:border-transparent"
                         required
                     />
                     <p className="text-xs text-amber-600 mt-1">
-                        Informe o número de portas (incluindo porta-malas)
+                        Informe a capacidade de páginas da impressora
                     </p>
                 </div>
 
                 <div className="pt-4 border-t border-amber-100">
                     <div className="flex items-center justify-between">
                         <a 
-                            href="/carros"
+                            href="/impress"
                             className="text-amber-700 hover:text-amber-800 hover:underline text-sm"
                         >
                             ← Voltar para lista
@@ -157,7 +156,7 @@ export default function NewCarros() {
                             <button
                                 type="button"
                                 onClick={() => {
-                                    setFormData({ marca: '', portas: '' });
+                                    setFormData({ fabricante: '', qtpag: '' });
                                     setMessage(null);
                                 }}
                                 className="px-5 py-2.5 border border-amber-300 text-amber-700 rounded-lg hover:bg-amber-50 transition-colors"
@@ -179,7 +178,7 @@ export default function NewCarros() {
                                         </svg>
                                         Salvando...
                                     </>
-                                ) : 'Salvar Carro'}
+                                ) : 'Salvar Impressora'}
                             </button>
                         </div>
                     </div>
@@ -190,8 +189,8 @@ export default function NewCarros() {
             <div className="mt-8 p-4 bg-amber-50 rounded-lg border border-amber-100">
                 <h3 className="text-sm font-medium text-amber-800 mb-2">Dicas:</h3>
                 <ul className="text-xs text-amber-600 space-y-1">
-                    <li>• Certifique-se de que a marca está escrita corretamente</li>
-                    <li>• Para carros com 5 portas, inclua a porta do porta-malas</li>
+                    <li>• Certifique-se de que o fabricante está escrito corretamente</li>
+                    <li>• A quantidade de páginas se refere à capacidade mensal</li>
                     <li>• Após o cadastro, você será redirecionado para a lista</li>
                 </ul>
             </div>

@@ -1,4 +1,4 @@
-// layout.tsx - VERSÃO FUNCIONAL
+// layout.tsx - VERSÃO PARA IMPRESSORAS
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -7,8 +7,8 @@ import Link from "next/link";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Prova Adair",
-  description: "Gestão de veículos",
+  title: "Prova Adair - Impressoras (Felix B. S. Filho)",
+  description: "Gestão de impressoras",
 };
 
 export default function RootLayout({
@@ -29,7 +29,7 @@ export default function RootLayout({
               <div className="flex items-center space-x-3">
                 <div className="w-2 h-8 bg-rose-900"></div>
                 <h1 className="text-xl font-medium text-rose-900">
-                  Prova Adair
+                  Prova Adair - Impressoras (Felix B. S. Filho)
                 </h1>
               </div>
 
@@ -42,16 +42,16 @@ export default function RootLayout({
                   Início
                 </Link>
                 <Link 
-                  href="/carros" 
+                  href="/impress" 
                   className="text-sm text-amber-800 hover:text-rose-900"
                 >
-                  Veículos
+                  Impressoras
                 </Link>
                 <Link 
-                  href="/carros/new" 
+                  href="/impress/new" 
                   className="text-sm text-white bg-rose-900 px-4 py-2 rounded hover:bg-rose-950"
                 >
-                  + Novo
+                  + Nova
                 </Link>
               </div>
 
@@ -70,7 +70,7 @@ export default function RootLayout({
         <div className="mt-16 pt-8 border-t border-amber-100">
           <div className="max-w-6xl mx-auto px-6">
             <p className="text-xs text-amber-600 text-center">
-              Prova_ADAIR • {new Date().getFullYear()}
+              Prova Adair - Impressoras (Felix B. S. Filho)• {new Date().getFullYear()}
             </p>
           </div>
         </div>
